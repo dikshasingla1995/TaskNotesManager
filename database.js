@@ -19,7 +19,7 @@ const Task = db.define('tasks', {
         type: Sequelize.TEXT
     },
     due: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         allowNull: false
     },
     status: {
