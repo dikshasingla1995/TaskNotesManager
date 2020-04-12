@@ -48,7 +48,7 @@ const Note = db.define('notes', {
 
 Task.hasMany(Note, { as: 'All_Notes', foreignKey: 'taskId' })
 
-db.sync({force : true})
+db.sync()
     .then(() => console.log("Database has been synced"))
     .catch(() => console.log("Error creating database"))
 
