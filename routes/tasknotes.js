@@ -1,11 +1,11 @@
 const { Router } = require('express')
-const { Tasks, Notes } = require('../database')
+const { Task, Note } = require('../database')
 
 const route = Router()
 
 //to get all tasks in an array
 route.get('/', async (req, res) => {
-  const tasks = await Tasks.findAll()
+  const tasks = await Task.findAll()
   res.send(tasks)
 })
 
@@ -16,7 +16,7 @@ route.get('/:id', async (req, res) => {
       error: 'task id must be an integer',
     })
   }
-  const task = await Tasks.findByPk(req.params.id)
+  const task = await Task.findByPk(req.params.id)
   if (!task) {
     return res.status(404).send({
       error: 'No task found with id = ' + req.params.id,
@@ -27,7 +27,7 @@ route.get('/:id', async (req, res) => {
 
 //to add a new task
 route.post('/', async (req, res) => {
-  const newTask = await Tasks.create({
+  const newTask = await Task.create({
     title: req.body.title,
     description: req.body.description,
     due: req.body.due,
@@ -44,7 +44,7 @@ route.patch('/:id', async (req, res) => {
       error: 'task id must be an integer',
     })
   }
-  Tasks.update({
+  Task.update({
     title: req.body.title,
     description: req.body.description,
     due: req.body.due,
@@ -69,9 +69,9 @@ route.get('/:id/notes', async (req, res) => {
       error: 'task id must be an integer',
     })
   }
-  const task = await Tasks.findByPk(req.params.id, {
+  const task = await Task.findByPk(req.params.id, {
     include: [{
-      model: Notes,
+      model: Note,
       as: 'All_Notes',
       attributes: ['noteId', 'text']
     }]
@@ -91,13 +91,13 @@ route.post('/:id/notes', async (req, res) => {
       error: 'task id must be an integer',
     })
   }
-  const task = await Tasks.findByPk(req.params.id)
+  const task = await Task.findByPk(req.params.id)
   if (!task) {
     return res.status(404).send({
       error: 'No task found with id = ' + req.params.id,
     })
   }
-  const newNote = await Notes.create({
+  const newNote = await Note.create({
     taskId: req.params.id,
     text: req.body.text
   })

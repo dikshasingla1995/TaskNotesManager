@@ -1,10 +1,10 @@
-const { db, Tasks, Notes } = require('./database')
+const { db, Task, Note } = require('./database')
 
-Tasks.hasMany(Notes, { as: 'All_Notes', foreignKey: 'taskId' })
+Task.hasMany(Note, { as: 'All_Notes', foreignKey: 'taskId' })
 
 db.sync()
     .then(() => {
-        Tasks.create({
+        Task.create({
             title: 'Db Created',
             description: 'project Node Js',
             due: '2020-04-12',
@@ -12,7 +12,7 @@ db.sync()
             priority: 'high'
         })
     }).then(() => {
-        Notes.create({
+        Note.create({
             taskId: 1,
             text: 'My Second Note'
         })
