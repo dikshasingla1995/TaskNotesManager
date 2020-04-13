@@ -70,11 +70,13 @@ route.get('/:id/notes', async (req, res) => {
     })
   }
   const task = await Task.findByPk(req.params.id, {
-    include: [{
-      model: Note,
-      as: 'All_Notes',
-      attributes: ['noteId', 'text']
-    }]
+    include: [
+      {
+        model: Note,
+        as: 'All_Notes',
+        attributes: ['noteId', 'text']
+      }
+    ]
   })
   if (!task) {
     return res.status(404).send({

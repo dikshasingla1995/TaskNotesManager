@@ -5,9 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Notes Manager</title>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
@@ -20,34 +18,41 @@
 
 <body>
     <h1>Add Task</h1>
-    <div>
-        <label for="title">Task Title:</label>
-        <input type="text" id="title" required><br>
-        <label for="description">Title Description</label>
-        <input type="text" id="description"><br>
-        <label for="due">Task Due Date:</label>
-        <input type="date" id="due" required><br>
-        <label for="status">Task Status:</label>
-        <select id="status">
-            <option value="complete">complete</option>
-            <option value="incomplete" selected>Incomplete</option>
-        </select>
-        <br>
-        <label for="priority">Task Priority:</label>
-        <select id="priority">
-            <option value="high">High</option>
-            <option value="medium" selected>Medium</option>
-            <option value="low">Low</option>
-        </select>
-        <br>
-        <button id="submit">Submit</button>
+    <div class="container">
+        <div class="form">
+            <label for="title">Task Title:</label>
+            <input type="text" id="title" required><br>
+            <label for="description">Title Description</label>
+            <input type="text" id="description"><br>
+            <label for="due">Task Due Date:</label>
+            <input type="date" id="due" required><br>
+            <label for="status">Task Status:</label>
+            <select id="status">
+                <option value="complete">complete</option>
+                <option value="incomplete" selected>Incomplete</option>
+            </select>
+            <br>
+            <label for="priority">Task Priority:</label>
+            <select id="priority">
+                <option value="high">High</option>
+                <option value="medium" selected>Medium</option>
+                <option value="low">Low</option>
+            </select>
+            <br>
+            <button id="submit">Submit</button>
+        </div>
     </div>
-    <div>
-        <ul id="task-list">
-            
-        </ul>
+    <br>
+    <div class="container" id= "taskList">
+        <div class="row">
+            <div class="col-sm" id="title">title</div>
+            <div class="col-sm" id="description">description</div>
+            <div class="col-sm" id="due">due</div>
+            <div class="col-sm" id="status">status</div>
+            <div class="col-sm" id="priority">priority</div>
+            <button id="update">Update</button>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>
-
 </html>

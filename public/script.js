@@ -9,7 +9,48 @@ submit.addEventListener('click', addNewTask)
 
 window.onload = function () {
   setTommorowDate()
-  fetchTasks()
+  GetTask()
+}
+
+function createTask(task) {
+  let taskStatus = 'incomplete'
+  if (task.status === true) {
+    taskStatus = 'complete'
+  }
+  return $(`
+  <div class="row" id = "${task.taskId}" onclick = "showTaskNotes(${task.taskId})">
+    <div class="col-sm" id="title">${task.title}</div>
+    <div class="col-sm" id="description">${task.description}</div>
+    <div class="col-sm" id="due">${task.due}</div>
+    <div class="col-sm" id="status">${taskStatus}</div>
+    <div class="col-sm" id="priority">${task.priority}</div>
+    <button id="update" onclick = "UpdateTask(${task.taskId})">Update</button>
+  </div>
+  <br>`)
+}
+
+function showTaskNotes(taskId) {
+  getTaskNotesWithId(taskId).then(task=>{
+    console.log(task)
+  })
+  alert("div clicked " + taskId)
+}
+
+function UpdateTask(taskId) {
+  getTaskWithId(taskId).then(task=>{
+    console.log(task)
+  })
+  alert("button clicked " + taskId)
+}
+
+function GetTask() {
+  let taskList = $('#taskList')
+  taskList.empty()
+  getTask().then(tasks => {
+    tasks.forEach(task => {
+      taskList.append(createTask(task))
+    })
+  })
 }
 
 function setTommorowDate() {
@@ -18,24 +59,13 @@ function setTommorowDate() {
   due.value = today.toISOString().split('T')[0]
 }
 
-function fetchTasks() {
-  taskList.innerHTML = ''
-  getTask().then(res => {
-    res.forEach(element => {
-      let userData = document.createElement('li')
-      userData.innerText = element.title
-      taskList.appendChild(userData)
-    })
-  })
-}
-
 function addNewTask() {
   let taskStatus = false
   if (status.value === 'complete') {
     taskStatus = true
   }
   addNewTaskToDB(title.value, description.value, due.value, taskStatus, priority.value)
-  fetchTasks()
+  GetTask()
   setTommorowDate()
   title.value = ''
   description.value = ''
@@ -58,4 +88,20 @@ async function addNewTaskToDB(title, description, due, status, priority) {
     },
     body: JSON.stringify({ title, description, due, status, priority })
   })
+}
+
+async function getTaskWithId(taskId) {
+  const resp = await fetch(`/tasknotes/${taskId}`, {
+    method: 'GET',
+  })
+  const task = await resp.json()
+  return task
+}
+
+async function getTaskNotesWithId(taskId) {
+  const resp = await fetch(`/tasknotes/${taskId}/notes`, {
+    method: 'GET',
+  })
+  const task = await resp.json()
+  return task
 }
