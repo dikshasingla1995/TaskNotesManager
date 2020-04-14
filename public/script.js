@@ -39,7 +39,18 @@ function showTaskNotes(taskId) {
       userData.innerText = note.text
       userList.appendChild(userData)
     })
-    
+    let divElement = document.createElement('div')
+    divElement.setAttribute('id',`${taskId}div`)
+    let noteInput = document.createElement('input')
+    noteInput.setAttribute('type','text')
+    noteInput.setAttribute('id',`${taskId}noteText`)
+    let addButton = document.createElement('input')
+    addButton.setAttribute('type', 'button')
+    addButton.setAttribute('value', 'Add New Note')
+    addButton.setAttribute('onclick', `AddNewNoteToTask(${taskId})`)
+    divElement.appendChild(noteInput)
+    divElement.appendChild(addButton)
+    userList.appendChild(divElement)
   })
   /*let notesList = $(`#${taskId}notesList`)
   notesList.empty()
@@ -48,6 +59,13 @@ function showTaskNotes(taskId) {
       notesList.append(createNote(note))
     })
   })*/
+}
+
+function AddNewNoteToTask(taskId){
+  let noteText = document.getElementById(`${taskId}noteText`)
+  addNewNoteWithTask(taskId,noteText.value).then(()=>{
+    showTaskNotes(taskId)
+  })
 }
 
 function UpdateTask(taskId) {
@@ -110,6 +128,16 @@ async function getTaskNotesWithId(taskId) {
   })
   const task = await resp.json()
   return task
+}
+
+async function addNewNoteWithTask(taskId,noteText) {
+  const resp = await fetch(`/tasknotes/${taskId}/notes`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ text : noteText })
+  })
 }
 
 function setTommorowDate() {
