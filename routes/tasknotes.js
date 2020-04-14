@@ -8,6 +8,7 @@ route.get('/', async (req, res) => {
   const tasks = await Task.findAll()
   res.send(tasks)
 })
+//{ order: [['status', 'DESC']]}
 
 //to get details of a task with id
 route.get('/:id', async (req, res) => {
@@ -45,8 +46,6 @@ route.patch('/:id', async (req, res) => {
     })
   }
   Task.update({
-    title: req.body.title,
-    description: req.body.description,
     due: req.body.due,
     status: req.body.status,
     priority: req.body.priority

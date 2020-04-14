@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Task Details</title>
+</head>
+<body>
+    <div>
+        <h1>Update Task</h1>
+        <div class="container">
+            <div class="form">
+                <label for="titleUpdate">Task Title:</label>
+                <input type="text" id="titleUpdate" readonly required><br>
+                <label for="descriptionUpdate">Title Description</label>
+                <input type="text" id="descriptionUpdate" readonly><br>
+                <label for="dueUpdate">Task Due Date:</label>
+                <input type="date" id="dueUpdate" required><br>
+                <label for="statusUpdate">Task Status:</label>
+                <select id="statusUpdate">
+                    <option value="complete">complete</option>
+                    <option value="incomplete" selected>Incomplete</option>
+                </select>
+                <br>
+                <label for="priorityUpdate">Task Priority:</label>
+                <select id="priorityUpdate">
+                    <option value="high">High</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="low">Low</option>
+                </select>
+                <br>
+                <button id="submitUpdate">Update</button>
+            </div>
+        </div>
+    </div>
+    <script src="updateScript.js"></script>
+</body>
+</html>

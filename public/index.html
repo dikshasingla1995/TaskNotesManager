@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +14,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
-
 <body>
     <h1>Add Task</h1>
     <div class="container">
@@ -43,16 +41,18 @@
         </div>
     </div>
     <br>
-    <div class="container" id= "taskList">
+    <div class="container" id="taskList">
         <div class="row">
             <div class="col-sm" id="title">title</div>
             <div class="col-sm" id="description">description</div>
             <div class="col-sm" id="due">due</div>
             <div class="col-sm" id="status">status</div>
             <div class="col-sm" id="priority">priority</div>
-            <button id="update">Update</button>
+            <form action="" method="post">
+                <button id="update" value="5">Update</button>
+            </form>
         </div>
-        <div id= "notesList"></div>
+        <div id="notesList"></div>
     </div>
     <script src="script.js"></script>
 </body>
