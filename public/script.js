@@ -26,21 +26,34 @@ function createTask(task) {
     <div class="col-sm" id="priority">${task.priority}</div>
     <button id="update" onclick = "UpdateTask(${task.taskId})">Update</button>
   </div>
+  <div id= "${task.taskId}notesList"></div>
   <br>`)
 }
 
 function showTaskNotes(taskId) {
-  getTaskNotesWithId(taskId).then(task=>{
-    console.log(task)
+  let userList = document.getElementById(`${taskId}notesList`)
+  userList.innerHTML = ''
+  getTaskNotesWithId(taskId).then(task => {
+    task.All_Notes.forEach(note =>{
+      let userData = document.createElement('li')
+      userData.innerText = note.text
+      userList.appendChild(userData)
+    })
+    
   })
-  alert("div clicked " + taskId)
+  /*let notesList = $(`#${taskId}notesList`)
+  notesList.empty()
+  getTaskNotesWithId(taskId).then(task => {
+    task.All_Notes.forEach(note =>{
+      notesList.append(createNote(note))
+    })
+  })*/
 }
 
 function UpdateTask(taskId) {
-  getTaskWithId(taskId).then(task=>{
+  getTaskWithId(taskId).then(task => {
     console.log(task)
   })
-  alert("button clicked " + taskId)
 }
 
 function GetTask() {
@@ -51,12 +64,6 @@ function GetTask() {
       taskList.append(createTask(task))
     })
   })
-}
-
-function setTommorowDate() {
-  const today = new Date()
-  today.setDate(today.getDate() + 1)
-  due.value = today.toISOString().split('T')[0]
 }
 
 function addNewTask() {
@@ -76,7 +83,6 @@ function addNewTask() {
 async function getTask() {
   const resp = await fetch('/tasknotes', { method: 'GET' })
   const tasks = await resp.json()
-  console.log(tasks)
   return tasks
 }
 
@@ -104,4 +110,10 @@ async function getTaskNotesWithId(taskId) {
   })
   const task = await resp.json()
   return task
+}
+
+function setTommorowDate() {
+  const today = new Date()
+  today.setDate(today.getDate() + 1)
+  due.value = today.toISOString().split('T')[0]
 }
