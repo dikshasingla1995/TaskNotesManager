@@ -3,10 +3,13 @@ let description = document.getElementById('description')
 let due = document.getElementById('due')
 let status = document.getElementById('status')
 let priority = document.getElementById('priority')
+let filterValue = document.getElementById('filterValue')
+let filter = document.getElementById('filter')
 let submit = document.getElementById('submit')
-if(submit != null){
-  submit.addEventListener('click', addNewTask)
-}
+
+submit.addEventListener('click', addNewTask)
+filter.addEventListener('click', GetTask)
+
 window.onload = function () {
   setTommorowDate()
   GetTask()
@@ -18,6 +21,12 @@ function createTask(task) {
   if (task.status === true) {
     taskStatus = 'complete'
   }
+  let priorityTask = 'medium'
+  if(task.priority === 3){
+    priorityTask = 'high'
+  } else if(task.priority === 1){
+    priorityTask = 'low'
+  }
   return $(`
   <div id = "${task.taskId}" >
     <div class="row" onclick = "showTaskNotes(${task.taskId})">
@@ -25,7 +34,7 @@ function createTask(task) {
       <div class="col-sm" id="description">${task.description}</div>
       <div class="col-sm" id="due">${task.due}</div>
       <div class="col-sm" id="status">${taskStatus}</div>
-      <div class="col-sm" id="priority">${task.priority}</div>
+      <div class="col-sm" id="priority">${priorityTask}</div>
     </div>
     <button id="update" onclick = "UpdateTask(${task.taskId})">Update</button>
   </div>
@@ -33,10 +42,10 @@ function createTask(task) {
   <br>`)
 }
 
-//updating task details
+//updating task details(completed)
 function UpdateTask(taskId) {
-  getTaskWithId(taskId).then((task)=>{
-    sessionStorage.setItem("favoriteMovie", JSON.stringify(task))
+  getTaskWithId(taskId).then((task) => {
+    sessionStorage.setItem("taskData", JSON.stringify(task))
     location.replace("updateTask.html")
   })
 }
@@ -86,10 +95,21 @@ function GetTask() {
   let taskList = $('#taskList')
   taskList.empty()
   getTask().then(tasks => {
-    //sort list by due date descending tasks.sort((a, b) => (a.due < b.due) ? 1 : -1)
-    //sort list by due date ascending tasks.sort((a, b) => (a.due > b.due) ? 1 : -1)
-    //sort by status tasks.sort((x, y) => Number(x.status) - Number(y.status))
-    //sort by priority
+    switch (filterValue.value) {
+      case 'ascending':
+        tasks.sort((a, b) => (a.due > b.due) ? 1 : -1)
+        break
+      case 'descending':
+        tasks.sort((a, b) => (a.due < b.due) ? 1 : -1)
+        break
+      case 'priority':
+        tasks.sort((x, y) => Number(y.priority) - Number(x.priority))
+        break
+      case 'status':
+        tasks.sort((x, y) => Number(x.status) - Number(y.status))
+        break
+      default:
+    }
     tasks.forEach(task => {
       taskList.append(createTask(task))
     })
@@ -102,7 +122,13 @@ function addNewTask() {
   if (status.value === 'complete') {
     taskStatus = true
   }
-  addNewTaskToDB(title.value, description.value, due.value, taskStatus, priority.value)
+  let priorityTask = 2
+  if(priority.value === 'high'){
+    priorityTask = 3
+  } else if(priority.value === 'low'){
+    priorityTask = 1
+  }
+  addNewTaskToDB(title.value, description.value, due.value, taskStatus, priorityTask)
   GetTask()
   setTommorowDate()
   title.value = ''

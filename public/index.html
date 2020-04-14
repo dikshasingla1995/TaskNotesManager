@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,6 +15,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
+
 <body>
     <h1>Add Task</h1>
     <div class="container">
@@ -41,6 +43,16 @@
         </div>
     </div>
     <br>
+    <div class = "container">
+        <select id="filterValue">
+            <option value="" selected disabled hidden>Select Filter Type</option>
+            <option value="ascending">Due Date(Ascending)</option>
+            <option value="descending">Due Date(Descending)</option>
+            <option value="priority">Priority</option>
+            <option value="status">Status</option>
+        </select>
+        <button id="filter">Apply Filter</button>
+    </div>
     <div class="container" id="taskList">
         <div class="row">
             <div class="col-sm" id="title">title</div>
@@ -56,4 +68,5 @@
     </div>
     <script src="script.js"></script>
 </body>
+
 </html>

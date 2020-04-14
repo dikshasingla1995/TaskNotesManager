@@ -13,24 +13,37 @@ const Task = db.define('tasks', {
     },
     title: {
         type: Sequelize.STRING(100),
-        allowNull: false
+        allowNull: false,
+        validate:{
+            notEmpty: true
+        }
     },
     description: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
+        allowNull : false
     },
     due: {
         type: Sequelize.DATEONLY,
-        allowNull: false
+        allowNull: false,
+        validate:{
+            isDate: true
+        }
     },
     status: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
-        allowNull: false
+        allowNull: false,
+        validate:{
+            isBoolean: true
+        }
     },
     priority: {
-        type: Sequelize.STRING,
-        defaultValue: 'medium',
-        allowNull: false
+        type: Sequelize.NUMBER,
+        defaultValue: 2,
+        allowNull: false,
+        validate: {
+            isIn: [[1, 2, 3]]
+        }
     }
 })
 
@@ -42,7 +55,10 @@ const Note = db.define('notes', {
     },
     text: {
         type: Sequelize.TEXT,
-        allowNull: false
+        allowNull: false,
+        validate:{
+            notEmpty: true
+        }
     }
 })
 
