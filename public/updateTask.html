@@ -1,38 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update Task Details</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <div>
-        <h1>Update Task</h1>
-        <div class="container">
-            <div class="form">
-                <label for="titleUpdate">Task Title:</label>
-                <input type="text" id="titleUpdate" readonly required><br>
-                <label for="descriptionUpdate">Title Description</label>
-                <input type="text" id="descriptionUpdate" readonly><br>
-                <label for="dueUpdate">Task Due Date:</label>
-                <input type="date" id="dueUpdate" required><br>
-                <label for="statusUpdate">Task Status:</label>
-                <select id="statusUpdate">
-                    <option value="complete">complete</option>
-                    <option value="incomplete" selected>Incomplete</option>
-                </select>
-                <br>
-                <label for="priorityUpdate">Task Priority:</label>
-                <select id="priorityUpdate">
-                    <option value="high">High</option>
-                    <option value="medium" selected>Medium</option>
-                    <option value="low">Low</option>
-                </select>
-                <br>
-                <button id="submitUpdate">Update</button>
+    <div class="container">
+        <h1 class="text-center">Tasks Notes Manager</h1>
+        <div class="update-task">
+            <h2>Update Task</h2>
+            <div class="form-group row">
+                <label for="titleUpdate" class="col-sm-2 col-form-label">Task Title:</label>
+                <div class="col-sm-10">
+                    <input type="text" id="titleUpdate" readonly class="form-control-plaintext">
+                </div>
             </div>
+            <div class="form-group row">
+                <label for="descriptionUpdate" class="col-sm-2 col-form-label">Title Description:</label>
+                <div class="col-sm-10">
+                    <input type="text" id="descriptionUpdate" readonly class="form-control-plaintext">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="dueUpdate" class="col-sm-2 col-form-label">Task Due Date:</label>
+                <div class="col-sm-10">
+                    <input type="date" id="dueUpdate" required class="form-control datepicker">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="statusUpdate" class="col-sm-2 col-form-label">Task Status:</label>
+                <div class="col-sm-10">
+                    <input type="checkbox" id="statusUpdate" class="form-control">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="priorityUpdate" class="col-sm-2 col-form-label">Task Priority:</label>
+                <div class="col-sm-10">
+                    <select id="priorityUpdate" class="form-control">
+                        <option value="high">High</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="low">Low</option>
+                    </select>
+                </div>
+            </div>
+            <button id="submitUpdate" type="submit" class="btn btn-success">Update</button>
         </div>
     </div>
     <script src="updateScript.js"></script>
 </body>
+
 </html>

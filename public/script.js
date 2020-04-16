@@ -22,23 +22,28 @@ function createTask(task) {
     taskStatus = 'complete'
   }
   let priorityTask = 'medium'
-  if(task.priority === 3){
+  if (task.priority === 3) {
     priorityTask = 'high'
-  } else if(task.priority === 1){
+  } else if (task.priority === 1) {
     priorityTask = 'low'
   }
   return $(`
-  <div id = "${task.taskId}" >
-    <div class="row" onclick = "showTaskNotes(${task.taskId})">
-      <div class="col-sm" id="title">${task.title}</div>
-      <div class="col-sm" id="description">${task.description}</div>
-      <div class="col-sm" id="due">${task.due}</div>
-      <div class="col-sm" id="status">${taskStatus}</div>
-      <div class="col-sm" id="priority">${priorityTask}</div>
+  <div class="card border-success">
+    <div class="card-body">
+      <div id = "${task.taskId}" class="row" onclick = "showTaskNotes(${task.taskId})">
+        <div class="col-sm" id="title">${task.title}</div>
+        <div class="col-sm" id="description">${task.description}</div>
+        <div class="col-sm" id="due">${task.due}</div>
+        <div class="col-sm" id="status">${taskStatus}</div>
+        <div class="col-sm" id="priority">${priorityTask}</div>
+        <div class="col-sm">
+          <button id="update" class="btn btn-primary" onclick = "UpdateTask(${task.taskId})">Update</button>
+        </div> 
+      </div>
+      <ul class="list-group list-group-flush" id= "${task.taskId}notesList">
+      </ul>
     </div>
-    <button id="update" onclick = "UpdateTask(${task.taskId})">Update</button>
   </div>
-  <div id= "${task.taskId}notesList"></div>
   <br>`)
 }
 
@@ -46,7 +51,7 @@ function createTask(task) {
 function UpdateTask(taskId) {
   getTaskWithId(taskId).then((task) => {
     sessionStorage.setItem("taskData", JSON.stringify(task))
-    location.replace("updateTask.html")
+    location.href = "updateTask.html"
   })
 }
 
@@ -57,34 +62,40 @@ function showTaskNotes(taskId) {
   getTaskNotesWithId(taskId).then(task => {
     task.All_Notes.forEach(note => {
       let userData = document.createElement('li')
+      userData.setAttribute('class','list-group-item')
       userData.innerText = note.text
       userList.appendChild(userData)
     })
     let divElement = document.createElement('div')
     divElement.setAttribute('id', `${taskId}div`)
+    divElement.setAttribute('class', 'form-row align-items-center')
+    let divElement1 = document.createElement('div')
+    divElement1.setAttribute('class', 'col-sm-8 my-1')
+    let divElement2 = document.createElement('div')
+    divElement2.setAttribute('class', 'col-auto my-1')
     let noteInput = document.createElement('input')
     noteInput.setAttribute('type', 'text')
     noteInput.setAttribute('id', `${taskId}noteText`)
+    noteInput.setAttribute('class', 'form-control')
     let addButton = document.createElement('input')
     addButton.setAttribute('type', 'button')
     addButton.setAttribute('value', 'Add New Note')
+    addButton.setAttribute('class', 'btn btn-primary')
     addButton.setAttribute('onclick', `AddNewNoteToTask(${taskId})`)
-    divElement.appendChild(noteInput)
-    divElement.appendChild(addButton)
+    divElement1.appendChild(noteInput)
+    divElement2.appendChild(addButton)
+    divElement.appendChild(divElement1)
+    divElement.appendChild(divElement2)
     userList.appendChild(divElement)
   })
-  /*let notesList = $(`#${taskId}notesList`)
-  notesList.empty()
-  getTaskNotesWithId(taskId).then(task => {
-    task.All_Notes.forEach(note =>{
-      notesList.append(createNote(note))
-    })
-  })*/
 }
 
 // to add new note to task(completed)
 function AddNewNoteToTask(taskId) {
   let noteText = document.getElementById(`${taskId}noteText`)
+  if(noteText.value === ''){
+    return false
+  }
   addNewNoteWithTask(taskId, noteText.value).then(() => {
     showTaskNotes(taskId)
   })
@@ -118,14 +129,17 @@ function GetTask() {
 
 // adding task to db(completed)
 function addNewTask() {
+  if (title.value === '') {
+    return false
+  }
   let taskStatus = false
   if (status.value === 'complete') {
     taskStatus = true
   }
   let priorityTask = 2
-  if(priority.value === 'high'){
+  if (priority.value === 'high') {
     priorityTask = 3
-  } else if(priority.value === 'low'){
+  } else if (priority.value === 'low') {
     priorityTask = 1
   }
   addNewTaskToDB(title.value, description.value, due.value, taskStatus, priorityTask)
@@ -139,14 +153,14 @@ function addNewTask() {
 
 //(completed)
 async function getTask() {
-  const resp = await fetch('/tasknotes', { method: 'GET' })
+  const resp = await fetch('/api/tasks', { method: 'GET' })
   const tasks = await resp.json()
   return tasks
 }
 
 //(completed)
 async function addNewTaskToDB(title, description, due, status, priority) {
-  const resp = await fetch('/tasknotes', {
+  const resp = await fetch('/api/tasks', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -157,7 +171,7 @@ async function addNewTaskToDB(title, description, due, status, priority) {
 
 //(completed)
 async function getTaskWithId(taskId) {
-  const resp = await fetch(`/tasknotes/${taskId}`, {
+  const resp = await fetch(`/api/tasks/${taskId}`, {
     method: 'GET',
   })
   const task = await resp.json()
@@ -166,7 +180,7 @@ async function getTaskWithId(taskId) {
 
 //(completed)
 async function getTaskNotesWithId(taskId) {
-  const resp = await fetch(`/tasknotes/${taskId}/notes`, {
+  const resp = await fetch(`/api/tasks/${taskId}/notes`, {
     method: 'GET',
   })
   const task = await resp.json()
@@ -175,7 +189,7 @@ async function getTaskNotesWithId(taskId) {
 
 //(completed)
 async function addNewNoteWithTask(taskId, noteText) {
-  const resp = await fetch(`/tasknotes/${taskId}/notes`, {
+  const resp = await fetch(`/api/tasks/${taskId}/notes`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

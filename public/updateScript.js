@@ -9,9 +9,8 @@ submitUpdate.addEventListener('click', updateTaskDetails)
 let task = JSON.parse(sessionStorage.getItem("taskData"))
 
 window.onload = function () {
-    let taskStatus = 'incomplete'
     if (task.status === true) {
-        taskStatus = 'complete'
+        statusUpdate.checked = true
     }
     let priorityTask = 'medium'
     if (task.priority === 3) {
@@ -22,28 +21,27 @@ window.onload = function () {
     titleUpdate.value = task.title
     descriptionUpdate.value = task.description
     dueUpdate.value = task.due
-    statusUpdate.value = taskStatus
     priorityUpdate.value = priorityTask
 }
 
 function updateTaskDetails() {
     let taskStatus = false
-    if (statusUpdate.value === 'complete') {
+    if (statusUpdate.checked) {
         taskStatus = true
     }
     let priorityTask = 2
     if (priorityUpdate.value === 'high') {
         priorityTask = 3
     } else if (priorityUpdate.value === 'low') {
-        priorityUpdate = 1
+        priorityTask = 1
     }
     updateTaskDetailsDB(task.taskId, dueUpdate.value, taskStatus, priorityTask).then(() => {
-        location.replace("index.html")
+        location.href = "index.html"
     })
 }
 
 async function updateTaskDetailsDB(taskId, due, status, priority) {
-    const resp = await fetch(`/tasknotes/${taskId}`, {
+    const resp = await fetch(`/api/tasks/${taskId}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json'
