@@ -31,18 +31,18 @@ function createTask(task) {
   <div class="card border-success">
     <div class="card-body">
       <div id = "${task.taskId}" class="row" onclick = "showTaskNotes(${task.taskId})">
-        <div class="col-sm" id="title">${task.title}</div>
-        <div class="col-sm" id="description">${task.description}</div>
+        <div class="col-md-4" id="title">${task.title}</div>
+        <div class="col-md-3" id="description">${task.description}</div>
         <div class="col-sm" id="due">${task.due}</div>
         <div class="col-sm" id="status">${taskStatus}</div>
-        <div class="col-sm" id="priority">${priorityTask}</div>
-        <div class="col-sm">
-          <button id="update" class="btn btn-primary" onclick = "UpdateTask(${task.taskId})">Update</button>
+        <div class="col-sm-1" id="priority">${priorityTask}</div>
+        <div class="col-sm-1">
+          <button id="update" class="btn btn-primary btn-sm" onclick = "UpdateTask(${task.taskId})">Update</button>
         </div> 
       </div>
-      <ul class="list-group list-group-flush" id= "${task.taskId}notesList">
-      </ul>
     </div>
+    <ul class="list-group list-group-flush" id= "${task.taskId}notesList">
+    </ul>
   </div>
   <br>`)
 }
@@ -72,7 +72,7 @@ function showTaskNotes(taskId) {
     let divElement1 = document.createElement('div')
     divElement1.setAttribute('class', 'col-sm-8 my-1')
     let divElement2 = document.createElement('div')
-    divElement2.setAttribute('class', 'col-auto my-1')
+    divElement2.setAttribute('class', 'col-auto')
     let noteInput = document.createElement('input')
     noteInput.setAttribute('type', 'text')
     noteInput.setAttribute('id', `${taskId}noteText`)

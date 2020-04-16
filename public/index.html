@@ -15,32 +15,33 @@
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+    <h1 class="text-center">Tasks Notes Manager</h1>
     <div class="container">
-        <h1 class="text-center">Tasks Notes Manager</h1>
         <div class="add-task">
             <h2>Add Task</h2>
             <div class="form-group row">
                 <label for="title" class="col-sm-2 col-form-label">Task Title:</label>
-                <div class="col-sm-10">
+                <div class="col-sm-8">
                     <input type="text" id="title" required class="form-control">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="description" class="col-sm-2 col-form-label">Title Description</label>
-                <div class="col-sm-10">
+                <div class="col-sm-8">
                     <input type="text" id="description" class="form-control">
                 </div>
             </div>
             <div class="form-group row">
-                <label for="dueUpdate" class="col-sm-2 col-form-label">Task Due Date:</label>
-                <div class="col-sm-10">
+                <label for="due" class="col-sm-2 col-form-label">Task Due Date:</label>
+                <div class="col-sm-8">
                     <input type="date" id="due" required class="form-control">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="status" class="col-sm-2 col-form-label">Task Status:</label>
-                <div class="col-sm-10">
+                <div class="col-sm-8">
                     <select id="status" class="form-control">
                         <option value="complete">complete</option>
                         <option value="incomplete" selected>Incomplete</option>
@@ -49,7 +50,7 @@
             </div>
             <div class="form-group row">
                 <label for="priority" class="col-sm-2 col-form-label">Task Priority:</label>
-                <div class="col-sm-10">
+                <div class="col-sm-8">
                     <select id="priority" class="form-control">
                         <option value="high">High</option>
                         <option value="medium" selected>Medium</option>
@@ -60,21 +61,36 @@
             <button id="submit" type="submit" class="btn btn-primary">Add Task</button>
         </div>
         <br>
-        <div class="input-group mb-3" id= "filter-data">
-            <select class="custom-select" id="filterValue">
+        <div class="input-group mb-3 row" id="filter-data" style="margin:auto">
+            <select class="custom-select col-sm-8" id="filterValue">
                 <option value="" selected disabled hidden>Select Filter Type</option>
                 <option value="ascending">Due Date(Ascending)</option>
                 <option value="descending">Due Date(Descending)</option>
                 <option value="priority">Priority</option>
                 <option value="status">Status</option>
             </select>
-            <div class="input-group">
+            <div class="input-group col-sm-4">
                 <button id="filter" class="btn btn-primary" type="button">Apply Filter</button>
             </div>
         </div>
+        <div class="card border-success">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4" id="title">Title</div>
+                    <div class="col-md-3" id="description">Description</div>
+                    <div class="col-sm" id="due">Due Date</div>
+                    <div class="col-sm" id="status">Status</div>
+                    <div class="col-sm-1" id="priority">Priority</div>
+                    <div class="col-sm-1">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
         <div id="taskList">
         </div>
     </div>
     <script src="script.js"></script>
 </body>
+
 </html>
